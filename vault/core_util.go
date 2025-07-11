@@ -17,6 +17,10 @@ func coreInit(c *Core, conf *CoreConfig) error {
 	c.physical = physical.NewCache(phys, conf.CacheSize, cacheLogger, c.MetricSink().Sink)
 	c.physicalCache = c.physical.(physical.ToggleablePurgemonster)
 
+	if haPhys, ok := phys.(physical.HABackend); ok {
+		haPhys.HookInvalidate(c.Invalidate)
+	}
+
 	// Wrap in encoding checks
 	if !conf.DisableKeyEncodingChecks {
 		c.physical = physical.NewStorageEncoding(c.physical)

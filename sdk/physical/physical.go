@@ -60,6 +60,8 @@ type Backend interface {
 	ListPage(ctx context.Context, prefix string, after string, limit int) ([]string, error)
 }
 
+type InvalidateFunc func(key string)
+
 // HABackend is an extensions to the standard physical
 // backend to support high-availability. Vault only expects to
 // use mutual exclusion to allow multiple instances to act as a
@@ -70,6 +72,8 @@ type HABackend interface {
 
 	// Whether or not HA functionality is enabled
 	HAEnabled() bool
+
+	HookInvalidate(hook InvalidateFunc)
 }
 
 // FencingHABackend is an HABackend which provides the additional guarantee that

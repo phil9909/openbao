@@ -205,6 +205,11 @@ type RaftBackend struct {
 	failGetInTxn        *uint32
 }
 
+// HookInvalidate implements physical.HABackend.
+func (r *RaftBackend) HookInvalidate(hook physical.InvalidateFunc) {
+	r.fsm.hookInvalidate(hook)
+}
+
 // LeaderJoinInfo contains information required by a node to join itself as a
 // follower to an existing raft cluster
 type LeaderJoinInfo struct {

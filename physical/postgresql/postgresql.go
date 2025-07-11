@@ -77,6 +77,11 @@ type PostgreSQLBackend struct {
 	txnPermitPool *physical.PermitPool
 }
 
+// HookInvalidate implements physical.HABackend.
+func (m *PostgreSQLBackend) HookInvalidate(hook physical.InvalidateFunc) {
+	panic("unimplemented")
+}
+
 // PostgreSQLLock implements a lock using an PostgreSQL client.
 type PostgreSQLLock struct {
 	backend    *PostgreSQLBackend

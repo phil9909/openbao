@@ -19,6 +19,11 @@ type InmemHABackend struct {
 	logger log.Logger
 }
 
+// HookInvalidate implements physical.HABackend.
+func (i *InmemHABackend) HookInvalidate(hook physical.InvalidateFunc) {
+	panic("unimplemented")
+}
+
 // NewInmemHA constructs a new in-memory HA backend. This is only for testing.
 func NewInmemHA(_ map[string]string, logger log.Logger) (physical.Backend, error) {
 	be, err := NewInmem(nil, logger)
